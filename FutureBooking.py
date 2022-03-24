@@ -26,9 +26,13 @@ class YueChe():
 		
 
 	def SendMessageToWechat(self):
-		url = "https://sctapi.ftqq.com/" + self.cfg.get("server_chan_api", "sendkey") + ".send"
-		paras = {"title": self.title,
-				 "desp": self.message}
+		url = self.cfg.get("pushdeer_api", "apiurl")
+		paras = {
+			"pushkey": self.cfg.get("pushdeer_api", "sendkey"),
+			"text": self.title,
+		    "desp": self.message,
+			"type": "markdown"
+		}
 		url_parts = list(urlparse.urlparse(url))
 		query = dict(urlparse.parse_qsl(url_parts[4]))
 		query.update(paras)
@@ -117,7 +121,7 @@ class YueChe():
 		paras = {"ipaddress": "192.168.1.107",
 				 "ossdk": "29",
 				 "os": "an",
-				 "trainType": "2",
+				 "trainType": self.cfg.get("booking", "kemu"),
 				 "xxzh": self.cfg.get("userinfo", "xxzh"),
 				 "yyrq": datetime.now().strftime("%Y-%m-%d"),
 				 "imei": "4c432414d2f97df0unknownHUAWEIVOG-AL00",
@@ -163,7 +167,7 @@ class YueChe():
 				 "filters[yyrq]": date,
 				 "filters[SdType]": "",
 				 "xxzh": self.cfg.get("userinfo", "xxzh"),
-				 "filters[trainType]": "2",
+				 "filters[trainType]": self.cfg.get("booking", "kemu"),
 				 "imei": "4c432414d2f97df0unknownHUAWEIVOG-AL00",
 				 "osversion": "10",
 				 "filters[IsXnsd]": "1"
@@ -203,7 +207,7 @@ class YueChe():
 				 "ipaddress": "192.168.1.107",
 				 "ossdk": "29",
 				 "os": "an",
-				 "trainType": "2",
+				 "trainType": self.cfg.get("booking", "kemu"),
 				 "params": carparam,
 				 "version": "5.2.5",
 				 "jlcbh": "",
